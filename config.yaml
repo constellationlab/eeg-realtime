@@ -1,0 +1,26 @@
+# Defaults for sigproc.py — real-time EEG signal processing & QC.
+# Amplitudes assumed in microvolts (uV).
+
+sampling_rate: 256  # Hz
+
+bandpass:
+  low_freq: 0.5  # Hz
+  high_freq: 50.0  # Hz
+  order: 2  # Butterworth order applied via filtfilt -> keep low to limit Gibbs artefacts near edges
+
+truncate_edges:
+  num_cycles: 3             # cycles of low_freq trimmed from each edge after filtering
+
+qc:
+  # Window length used for streaming QC metrics (RMS, peak-to-peak, bridge).
+  window_seconds: 5.0  # s
+
+  # Flat-channel detection: RMS below this is flagged.
+  flat_rms_threshold: 2.0   # uV
+
+  # Bridge detection: variance of pairwise difference
+  # pairs of channels below this is are considered bridged and flagged.
+  bridge_ed_threshold: 5.0  # uV^2
+
+  # Large-amplitude / motion artifact: max peak-to-peak above this is flagged.
+  ptp_threshold: 150.0      # uV
