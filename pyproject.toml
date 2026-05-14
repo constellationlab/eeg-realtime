@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "neurosentinel"
+version = "0.1.0"
+description = "Real-time EEG signal quality monitor"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy",
+    "scipy",
+    "fooof",
+    "matplotlib",
+]
+
+# Only ship the neurosentinel package itself. The top-level example.py /
+# sigproc.py / config.yaml in this directory are pipeline scaffolding,
+# not part of the importable library.
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["neurosentinel*"]
+exclude = ["neurosentinel.__pycache__*"]

@@ -57,20 +57,27 @@ def max_peak_to_peak(x):
 
 
 # detect electrode bridges
-def isbridged(x, threshold):
-    """Return (pairs, ed) where pairs is the list of (i, j) channel indices
-    whose electrical distance is below threshold.
+def is_bridged(x, threshold, ed=None):
+    """Symmetric (C, C) boolean matrix of bridged channel pairs.
+
+    mat[i, j] is True iff the electrical distance between channels i and j
+    is below threshold. Diagonal is False (NaN < threshold -> False).
 
     threshold has units of the signal squared. If x is in microvolts,
     a threshold of 5 means 5 uV^2.
+
+    If ed (a precomputed electrical_distance(x) matrix) is passed in, it is
+    reused instead of recomputed -- useful when the caller already has it.
     """
-    ed = electrical_distance(x)
-    pairs = np.argwhere(np.triu(ed < threshold, k=1))
-    return [tuple(p) for p in pairs], ed
+    if ed is None:
+        ed = electrical_distance(x)
+    with np.errstate(invalid="ignore"):  # NaN diagonal triggers a compare warning
+        mat = ed < threshold
+    return mat
 
 
 # detect flat electrodes
-def isflat(x, threshold):
+def is_flat(x, threshold):
     """Flag channels whose RMS is below threshold. x: (T, C) -> (C,) bool."""
     return compute_rms(x) < threshold
 

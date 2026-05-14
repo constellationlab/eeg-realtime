@@ -20,7 +20,7 @@ qc:
 
   # Bridge detection: variance of pairwise difference
   # pairs of channels below this is are considered bridged and flagged.
-  bridge_ed_threshold: 5.0  # uV^2
+  bridge_ed_threshold: 2  # uV^2
 
   # Large-amplitude / motion artifact: max peak-to-peak above this is flagged.
   ptp_threshold: 150.0      # uV

@@ -1,0 +1,5 @@
+numpy
+scipy
+fooof
+pycatch22
+matplotlib

@@ -1,0 +1,10 @@
+Metadata-Version: 2.4
+Name: neurosentinel
+Version: 0.1.0
+Summary: Real-time EEG signal quality monitor
+Requires-Python: >=3.10
+Requires-Dist: numpy
+Requires-Dist: scipy
+Requires-Dist: fooof
+Requires-Dist: pycatch22
+Requires-Dist: matplotlib

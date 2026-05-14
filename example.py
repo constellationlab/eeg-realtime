@@ -23,8 +23,8 @@ from sigproc import (
     compute_rms,
     electrical_distance,
     max_peak_to_peak,
-    isflat,
-    isbridged,
+    is_flat,
+    is_bridged,
     is_high_ptp,
 )
 
@@ -79,9 +79,11 @@ def main():
     ptp = max_peak_to_peak(x_f)
 
     # flags
-    flat_mask    = isflat(x_f, threshold=qc["flat_rms_threshold"])
+    flat_mask    = is_flat(x_f, threshold=qc["flat_rms_threshold"])
     high_ptp     = is_high_ptp(x_f, threshold=qc["ptp_threshold"])
-    bridges, _   = isbridged(x_f, threshold=qc["bridge_ed_threshold"])
+    bridged_mat  = is_bridged(x_f, threshold=qc["bridge_ed_threshold"], ed=ed)
+    bridges      = [(int(i), int(j))
+                    for i, j in np.argwhere(np.triu(bridged_mat, k=1))]
 
     # report
     print(f"{'ch':>3} {'rms (uV)':>10} {'ptp (uV)':>10}  flags")
